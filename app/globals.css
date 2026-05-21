@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+@theme {
+  --color-page: #fafcf8;
+  --color-card: #ffffff;
+  --color-soft: #f1f7ee;
+  --color-line: #e3ebe0;
+  --color-mint: #c8e6cf;
+  --color-leaf: #65b687;
+  --color-green: #16a34a;
+  --color-green-deep: #047857;
+  --color-green-ink: #064e3b;
+  --color-ink: #0e1a13;
+  --color-ink-soft: #4a5b51;
+  --color-ink-mute: #6e7e74;
+  --color-trust: #0c4a6e;
+
+  --font-display: var(--font-space-grotesk), var(--font-noto-serif-lao), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), var(--font-noto-sans-lao), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), var(--font-noto-sans-lao), ui-monospace, monospace;
+
+  --shadow-soft: 0 1px 2px rgba(14, 26, 19, 0.04), 0 8px 24px rgba(14, 26, 19, 0.06);
+  --shadow-soft-lg: 0 2px 6px rgba(14, 26, 19, 0.05), 0 20px 60px rgba(14, 26, 19, 0.08);
+  --shadow-green: 0 12px 36px rgba(22, 163, 74, 0.18);
+
+  --breakpoint-xs: 24rem;
+}
+
+@layer base {
+  html,
+  body {
+    background: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* Non-static so Framer Motion's <useScroll/> can measure scroll offsets
+     against the document. (The default <html> position is `static`, which
+     trips Framer's "non-static container" dev warning.) */
+  html {
+    position: relative;
+  }
+  body {
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--color-green);
+    color: white;
+  }
+
+  /* When the page is set to Lao, prefer the proper Lao faces in front and
+     soften the line-height a touch for Lao's taller diacritic stack. */
+  :lang(lo) {
+    --font-display: var(--font-noto-serif-lao), var(--font-space-grotesk), ui-serif, serif;
+    --font-body: var(--font-noto-sans-lao), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    --font-mono: var(--font-noto-sans-lao), var(--font-jetbrains-mono), ui-monospace, monospace;
+  }
+  :lang(lo) h1,
+  :lang(lo) h2,
+  :lang(lo) h3 {
+    line-height: 1.18;
+    letter-spacing: 0;
+    font-weight: 600;
+  }
+  :lang(lo) p,
+  :lang(lo) li,
+  :lang(lo) span,
+  :lang(lo) a,
+  :lang(lo) button,
+  :lang(lo) input,
+  :lang(lo) textarea,
+  :lang(lo) label {
+    font-family: var(--font-body);
+  }
+
+  /* Lenis smooth-scroll utility hooks */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(14, 26, 19, 0.06);
+  }
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(14, 26, 19, 0.07);
+  }
+
+  .card-soft {
+    background: #ffffff;
+    border: 1px solid var(--color-line);
+    box-shadow: var(--shadow-soft);
+  }
+  .card-soft-lg {
+    background: #ffffff;
+    border: 1px solid var(--color-line);
+    box-shadow: var(--shadow-soft-lg);
+  }
+
+  .bg-dotgrid {
+    background-image: radial-gradient(rgba(14, 26, 19, 0.07) 1px, transparent 1.2px);
+    background-size: 20px 20px;
+  }
+  .bg-dotgrid-fade {
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  }
+
+  .text-green-glow {
+    text-shadow: 0 4px 24px rgba(22, 163, 74, 0.25);
+  }
+
+  .ring-green {
+    box-shadow: 0 0 0 1px rgba(22, 163, 74, 0.35), 0 12px 36px rgba(22, 163, 74, 0.18);
+  }
+
+  .underline-green {
+    background-image: linear-gradient(transparent calc(100% - 4px), rgba(22, 163, 74, 0.85) 0);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .perspective-1200 {
+    perspective: 1200px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  60% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-skeleton-shimmer {
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-skeleton-pulse {
+  animation: skeleton-pulse 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
