@@ -25,8 +25,8 @@ export function HeroKineticMotion({ brand, tagline }: Props) {
             transition: { delayChildren: 0.05, staggerChildren: 0.06 },
           },
         }}
-        className="m-0 inline-flex flex-wrap items-baseline justify-center overflow-hidden px-1 pb-3 text-center font-display font-bold leading-[1.02] tracking-[-0.025em] text-ink"
-        style={{ fontSize: "clamp(2.25rem, 7.2vw, 10rem)" }}
+        className="m-0 inline-flex flex-nowrap items-baseline justify-center whitespace-nowrap px-1 pb-3 text-center font-display font-bold leading-[1.02] tracking-[-0.025em] text-ink"
+        style={{ fontSize: "clamp(1.5rem, 5.6vw, 9rem)" }}
       >
         {chars.map((c, i) => (
           <motion.span
